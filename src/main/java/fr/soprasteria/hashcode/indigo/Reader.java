@@ -5,13 +5,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import fr.soprasteria.hashcode.asteam.model.Ride;
-import fr.soprasteria.hashcode.asteam.model.RideStatus;
-import fr.soprasteria.hashcode.asteam.model.Vehicule;
+import fr.soprasteria.hashcode.indigo.model.Photo;
+import fr.soprasteria.hashcode.indigo.model.Tag;
 
 public class Reader {
 
@@ -30,7 +28,7 @@ public class Reader {
 
 	}
 
-private void read(String fileName) {
+	private void read(String fileName) {
 		
 		List<String> lines;
 
@@ -48,16 +46,27 @@ private void read(String fileName) {
 //					totalRows, totalColumns, totalVehicules, totalRides, bonus, totalSteps));
 			
 			// read lines
+			List<Photo> listPhotos = new ArrayList<Photo>();
+			List<Tag> listTag = new ArrayList<Tag>();
 			for(int i=1; i<=totalRows; i++) {
 				final String[] infosRideLine = lines.get(i).split(" ");
 				System.out.println("*******ID " + i + "**********");
+				Photo photo = new Photo();
+				photo.setId(i);
 				System.out.println("Position=" + infosRideLine[0]);
+				photo.setType(infosRideLine[0]);
 				final int nbTag = Integer.parseInt(infosRideLine[1]);
 				System.out.println("Nombre de tag=" + nbTag);
-				for (int j=0; j<nbTag; j++) {
+				for (int j=1; j<=nbTag; j++) {
+//					verifierPresence(infosRideLine[j+1], listTag, photo.getTags());
+					Tag t = new Tag(infosRideLine[j+1]);
 					System.out.println("Tag=" + infosRideLine[j+1]);
+					photo.getTags().add(t);
 				}
+				listPhotos.add(photo);
 				
+//				System.out.println(photo);
+				System.out.println(listTag);
 			}
 
 						
@@ -67,4 +76,21 @@ private void read(String fileName) {
 
 		
 	}
+	
+//	private void verifierPresence(final String tag, final List<Tag> listTag, final List<Tag> listTagPhoto) {
+//		boolean present = false;
+//		for (Tag temp : listTag) {
+//			if (temp.getNom().equals(tag)) {
+//				temp.setOccurence(temp.getOccurence()+1);
+//				present = true;
+//				break;
+//			} else {
+//				
+//			}
+//		}
+//		if (!present) {
+//			Tag t = new Tag(tag);
+//			listTag.add(t);
+//		}
+//	}
 }
