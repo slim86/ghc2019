@@ -58,17 +58,29 @@ public class Reader {
 				final int nbTag = Integer.parseInt(infosRideLine[1]);
 				System.out.println("Nombre de tag=" + nbTag);
 				for (int j=1; j<=nbTag; j++) {
-//					verifierPresence(infosRideLine[j+1], listTag, photo.getTags());
 					Tag t = new Tag(infosRideLine[j+1]);
 					System.out.println("Tag=" + infosRideLine[j+1]);
 					photo.getTags().add(t);
 				}
+				completerListScoreTag(photo, listTag);
 				listPhotos.add(photo);
+				System.out.println(photo);
 				
-//				System.out.println(photo);
-				System.out.println(listTag);
 			}
-
+			
+			System.out.println(listTag);
+			
+			for (Photo p : listPhotos) {
+				for (Tag tag : p.getTags()) {
+					for (Tag tagGlobal : listTag) {
+						if (tag.getNom().equals(tagGlobal.getNom())) {
+							p.setScore(p.getScore() + tagGlobal.getOccurence());
+						}
+					}
+				}
+			}
+			
+			System.out.println(listPhotos);
 						
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -77,20 +89,20 @@ public class Reader {
 		
 	}
 	
-//	private void verifierPresence(final String tag, final List<Tag> listTag, final List<Tag> listTagPhoto) {
-//		boolean present = false;
-//		for (Tag temp : listTag) {
-//			if (temp.getNom().equals(tag)) {
-//				temp.setOccurence(temp.getOccurence()+1);
-//				present = true;
-//				break;
-//			} else {
-//				
-//			}
-//		}
-//		if (!present) {
-//			Tag t = new Tag(tag);
-//			listTag.add(t);
-//		}
-//	}
+	private void completerListScoreTag(final Photo p, final List<Tag> listTag) {
+		for (Tag tagPhoto : p.getTags()) {
+			boolean present = false;
+			for (Tag t : listTag) {
+				if (t.getNom().equals(tagPhoto.getNom())) {
+					t.setOccurence(t.getOccurence() + 1);
+					present = true;
+					break;
+				}
+			}
+			if (!present) {
+				tagPhoto.setOccurence(1);
+				listTag.add(tagPhoto);
+			}
+		}
+	}
 }

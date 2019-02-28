@@ -3,17 +3,17 @@ package fr.soprasteria.hashcode.indigo.model;
 public class Tag {
 
 	private String nom;
-	private long occurence;
+	private int occurence;
 	public String getNom() {
 		return nom;
 	}
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public long getOccurence() {
+	public int getOccurence() {
 		return occurence;
 	}
-	public void setOccurence(long occurence) {
+	public void setOccurence(int occurence) {
 		this.occurence = occurence;
 	}
 	public Tag(String nom) {

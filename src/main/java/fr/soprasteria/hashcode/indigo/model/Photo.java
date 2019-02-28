@@ -8,6 +8,13 @@ public class Photo {
 	private int id;
 	private String type;
 	private List<Tag> tags = new ArrayList<Tag>();
+	private int score = 0;
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
 	public Photo() {
 		super();
 	}
@@ -31,6 +38,7 @@ public class Photo {
 	}
 	@Override
 	public String toString() {
-		return "Photo [id=" + id + ", type=" + type + ", tags=" + tags + "]";
+		return "Photo [id=" + id + ", type=" + type + ", tags=" + tags
+				+ ", score=" + score + "]";
 	}
 }
